@@ -1,0 +1,55 @@
+---
+import { clsx } from 'clsx';
+
+import Link from '../../../components/Link.astro';
+import { FinancialProduct } from '../../../constants/financial-products';
+
+import { Image } from 'astro:assets';
+import autoLoans from '../../../assets/financialProducts/autoLoans.svg';
+import personalLoans from '../../../assets/financialProducts/personalLoans.svg';
+import creditCards from '../../../assets/financialProducts/creditCards.svg';
+import checking from '../../../assets/financialProducts/checking.svg';
+import banking from '../../../assets/financialProducts/banking.svg';
+import savings from '../../../assets/financialProducts/savings.svg';
+import investments from '../../../assets/financialProducts/investments.svg';
+import retirement from '../../../assets/financialProducts/retirement.svg';
+
+interface iFinancialProductSelection {
+	address: string;
+	imgSrc: ImageMetadata;
+	label: string;
+}
+
+const products: iFinancialProductSelection[] = [
+	{ label: FinancialProduct.AUTO_LOANS, imgSrc: autoLoans, address: '/auto-loans' },
+	{ label: FinancialProduct.PERSONAL_LOANS, imgSrc: personalLoans, address: '/personal-loans' },
+	{ label: FinancialProduct.CREDIT_CARDS, imgSrc: creditCards, address: '/credit-cards' },
+	{ label: FinancialProduct.CHECKING, imgSrc: checking, address: '/checking' },
+	{ label: FinancialProduct.BANKING, imgSrc: banking, address: '/banking' },
+	{ label: FinancialProduct.SAVINGS, imgSrc: savings, address: '/savings' },
+	{ label: FinancialProduct.INVESTMENTS, imgSrc: investments, address: '/investments' },
+	{ label: FinancialProduct.RETIREMENT, imgSrc: retirement, address: '/retirement' },
+];
+
+const { pathname } = Astro.url;
+const subpath = pathname.match(/[^\/]+/g);
+const isActive = (href: string) => href === pathname || href === '/' + subpath?.[0];
+---
+
+<div class="py-4">
+	<div class="further-layout flex flex-row items-stretch flex-wrap justify-evenly gap-5">
+		{
+			products.map(({ label, imgSrc, address }) => (
+				<Link href={address} class="w-36 p-3 rounded-xl hover:bg-primary-100 self-end">
+					<div class="flex flex-col items-center justify-end gap-3">
+						<Image src={imgSrc} inferSize alt={label} />
+						<p class={clsx('text-sm font-normal text-primary-700', { 'border-primary-700 border-b-2': isActive(address) })}>
+							{label.toUpperCase() ?? ''}
+						</p>
+					</div>
+				</Link>
+			))
+		}
+	</div>
+</div>
+<!-- <p class="border-primary-700 border-b-2">{ label.toUpperCase() ?? '' }</p> -->

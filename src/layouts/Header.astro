@@ -1,0 +1,50 @@
+---
+import HeaderLink from '../components/HeaderLink.astro';
+import Link from '../components/Link.astro';
+
+import { Image } from 'astro:assets';
+import furtherLogo from '../assets/furtherLogo.png';
+
+let authenticated, userName;
+
+const activeUser = Astro.cookies.get('activeUser');
+if (activeUser) {
+	authenticated = true;
+	userName = JSON.parse(activeUser.value)?.name;
+}
+---
+
+<header>
+	<nav class="h-24">
+		<div class="further-layout h-full flex justify-between items-center font-medium">
+			<a href="/">
+				<Image class="w-32" src={furtherLogo} alt="Further Logo." />
+			</a>
+			<div class="flex flex-1 max-w-[600px] justify-between mx-8">
+				<HeaderLink class="text-primary-700 hover:text-primary-400" href="/borrow">Borrow</HeaderLink>
+				<HeaderLink class="text-primary-700 hover:text-primary-400" href="/save">Save</HeaderLink>
+				<HeaderLink class="text-primary-700 hover:text-primary-400" href="/bank">Bank</HeaderLink>
+				<HeaderLink class="text-primary-700 hover:text-primary-400" href="/invest">Invest</HeaderLink>
+				<HeaderLink class="text-primary-700 hover:text-primary-400" href="/about">About Credit Unions</HeaderLink>
+			</div>
+			<div class="flex justify-between gap-3">
+				{
+					authenticated ?
+						<div class="text-primary-700"> Howdy {userName}! </div>
+					:	<>
+							<Link
+								href=""
+								class="px-8 py-3 flex items-center border text-primary-700 border-primary-700 hover:bg-primary-50 rounded-3xl">
+								Sign In
+							</Link>
+							<Link
+								href="http://localhost:8081/sign-up"
+								class="px-8 py-3 flex items-center border text-white bg-primary-700 border-primary-700 hover:bg-primary-500 rounded-3xl">
+								Sign Up
+							</Link>
+						</>
+				}
+			</div>
+		</div>
+	</nav>
+</header>

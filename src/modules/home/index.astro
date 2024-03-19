@@ -1,0 +1,18 @@
+---
+import { useStoryblokApi } from '@storyblok/astro';
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
+
+const storyblokApi = useStoryblokApi();
+
+const { data } = await storyblokApi.get('cdn/stories/home', {
+	version: import.meta.env.DEV ? 'draft' : 'published',
+	// version: 'published',
+});
+
+const content = data.story.content;
+---
+
+<div class="bg-gradient-to-b from-layout-001 to-layout-002">
+	<!-- <div class="bg-gradient-to-b from-layout-001 via-layou to-layout-002"> -->
+	<StoryblokComponent blok={content} />
+</div>

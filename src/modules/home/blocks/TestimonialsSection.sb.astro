@@ -1,0 +1,71 @@
+---
+import { storyblokEditable, renderRichText, type SbBlokData } from '@storyblok/astro';
+import { clsx } from 'clsx';
+
+import Carousel from '../../../components/Carousel.astro';
+import type { SbImage } from '../../../constants/story-blocks';
+
+import { Image } from 'astro:assets';
+
+interface Testimonial {
+	content: string;
+	profileHeader: string;
+	profileSubHeader?: string;
+	profilePic?: SbImage;
+}
+
+interface Props {
+	blok: { testimonials: Testimonial[] };
+}
+
+const { blok } = Astro.props;
+---
+
+<div class="py-4" {...storyblokEditable(blok)}>
+	<Carousel>
+		{
+			blok.testimonials.map((testimonial) => (
+				<div class="flex flex-col items-center px-4 w-96 min-w-96 gap-10" {...storyblokEditable(testimonial as any)}>
+					<span class="font-light text-primary-900">{testimonial.content}</span>
+					<div class="flex flex-row gap-5">
+						{testimonial.profilePic?.filename ?
+							<Image class="h-10 w-10 rounded-full" src={testimonial.profilePic.filename} alt={testimonial.profilePic.alt} />
+						:	<span class="inline-block h-10 w-10 overflow-hidden rounded-full text-gray-400 bg-gray-100">
+								<svg class="h-full w-full" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+								</svg>
+							</span>
+						}
+						<div class="flex flex-col">
+							<span class="text-primary-700 text-sm">{testimonial.profileHeader}</span>
+							{testimonial.profileSubHeader && <span class="text-gray-500 text-xs">{testimonial.profileSubHeader}</span>}
+						</div>
+					</div>
+				</div>
+			))
+		}
+	</Carousel>
+</div>
+<!-- src={testimonial.profilePic?.filename || fallbackProfilePic} -->
+
+<!-- 
+<div class={clsx('further-layout h-full flex flex-wrap', blok.rtl && 'flex-row-reverse')}>
+    <div class="flex flex-initial w-full lg:w-2/4 flex-col items-start justify-evenly p-10">
+        <div class="flex flex-col gap-3">
+            <span class="text-primary-700" set:html={title} />
+            <span class="text-primary-900" set:html={description} />
+        </div>
+        {
+            blok.action && (
+                <Link
+                    href=""
+                    class="px-8 py-3 flex items-center border text-white bg-primary-700 border-primary-700 hover:bg-primary-500 rounded-3xl">
+                    {blok.action}
+                </Link>
+            )
+        }
+    </div>
+    <div class="flex w-full lg:w-2/4 px-10 items-center justify-center">
+        <Image class="max-h-[480px] w-auto" src={blok.heroImage.filename} inferSize alt="Further Logo." />
+    </div>
+</div> -->

@@ -1,0 +1,29 @@
+---
+import { storyblokEditable, type ISbRichtext, renderRichText } from '@storyblok/astro';
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
+import clsx from 'clsx';
+
+interface Props {
+	blok: {
+		columns: any[];
+		background?: string;
+		title?: ISbRichtext;
+	};
+}
+
+const { blok } = Astro.props;
+const title = renderRichText(blok.title);
+---
+
+<div class={clsx('py-4', blok.background)} {...storyblokEditable(blok)}>
+	<div class="further-layout">
+		{title && <div class="py-4 text-center text-primary-700" set:html={title} />}
+		<div class="flex flex-row flex-wrap place-items-start justify-center">
+			{
+				blok.columns?.map((blok) => {
+					return <StoryblokComponent blok={blok} />;
+				})
+			}
+		</div>
+	</div>
+</div>

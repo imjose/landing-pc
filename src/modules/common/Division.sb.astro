@@ -1,0 +1,31 @@
+---
+import { storyblokEditable } from '@storyblok/astro'
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
+ 
+const { blok } = Astro.props;
+---
+
+<div {...storyblokEditable(blok)} class="h-[425px]">
+  <div class="flex flex-row h-full">
+    <div class="flex-1 bg-layout-002"/>
+    <div class="further-layout flex flex-row flex-wrap">
+      <div class="flex justify-center content-center lg:w-1/2 bg-layout-002">
+        { blok.columns[0] && <StoryblokComponent blok={blok.columns[0]} /> }
+      </div>
+      <div class="flex justify-center content-center lg:w-1/2 bg-layout-003">
+        { blok.columns[1] && <StoryblokComponent blok={blok.columns[1]} /> }
+      </div>
+    </div>
+    <div class="flex-1 bg-layout-003"/>
+  </div>
+</div>
+
+<style>
+  /* margin-left: 1.25rem; */
+	.further-layout {
+		margin-left: 0rem;
+    margin-right: 0rem;
+    padding-left: 0rem;
+    padding-right: 0rem;
+	}
+</style>

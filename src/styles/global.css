@@ -1,0 +1,47 @@
+.further-layout {
+  @apply mx-auto max-w-[1440px] px-5;
+}
+
+h1 {
+  @apply text-6xl;
+}
+
+h2 {
+  @apply text-4xl;
+
+  sup {
+    top: -2em;
+    font-size: x-small;
+  }
+}
+
+h3 {
+  @apply text-3xl;
+
+  sup {
+    top: -1.5em;
+    font-size: x-small;
+  }
+}
+
+h4 {
+  @apply text-2xl;
+
+  sup {
+    top: -1.0em;
+    font-size: x-small;
+  }
+}
+
+h5 {
+  @apply text-xl;
+
+  sup {
+    /* top: -1.5em; */
+    font-size: x-small;
+  }
+}
+
+p {
+  @apply font-light;
+}
