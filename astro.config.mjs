@@ -10,7 +10,8 @@ const env = loadEnv('', process.cwd(), 'STORYBLOK');
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://further.app',
+	site: 'https://gofurther.app',
+	output: 'static',
 	integrations: [
 		tailwind(),
 		storyblok({

@@ -3,7 +3,6 @@
 
 interface ImportMetaEnv {
 	readonly STORYBLOK_TOKEN: string;
-	readonly STAGE: string;
 }
 
 interface ImportMeta {
